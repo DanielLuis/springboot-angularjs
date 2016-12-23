@@ -1,0 +1,18 @@
+<form class="form-horizontal" role="form" name="addClienteForm" ng-model="cliente" ng-submit="createCliente(addClienteForm)" novalidate>
+	<div class="form-group" ng-class="{ 'has-error': hasErrorForm(addClienteForm) }">
+	    <label for="name" class="col-sm-2 control-label">Nome</label>
+	    <div class="col-sm-10">
+	        <input type="text" ng-model="cliente.nome" class="form-control" name="name" required placeholder="Nome do Cliente"/>
+	        
+	        <div class="help-block" ng-messages="addClienteForm.name.$error" ng-if="hasErrorForm(addClienteForm)">
+	    		<div ng-messages-include="js/validacao/menssagens.html"></div>
+			</div>
+	    </div>
+	</div>
+	<div class="form-group">
+	    <div class="col-sm-offset-2 col-sm-6">
+	       <input type="submit" class="btn btn-primary" value="Salvar"/>
+	       <a href="#!/clientes" class="btn btn-danger">Cancelar</a>
+	    </div>
+	</div>
+</form>
