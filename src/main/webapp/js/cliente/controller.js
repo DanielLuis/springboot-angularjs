@@ -34,11 +34,11 @@ angular.module('myApp.controllers',['ngAnimate','myApp.modals','angularModalServ
 
     
     $scope.fetchAllClientes = function(){
-    	spinnerService.show('clientesSpinner');
+//    	spinnerService.show('clientesSpinner');
     	ClienteService.fetchAllClientes()
             .then(
             function(clientes) {
-            	spinnerService.hide('clientesSpinner');
+//            	spinnerService.hide('clientesSpinner');
                 $scope.clientes = clientes;
             },
             function(errResponse){
@@ -47,7 +47,7 @@ angular.module('myApp.controllers',['ngAnimate','myApp.modals','angularModalServ
         );
     };
  
-//    $scope.fetchAllClientes();
+    $scope.fetchAllClientes();
  
 }]).controller('ClienteCreateController', ['$scope','$location', 'ClienteService', function($scope,$location, ClienteService) { 
 	$scope.cliente={};
