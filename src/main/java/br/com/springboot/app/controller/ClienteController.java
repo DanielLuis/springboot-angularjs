@@ -37,7 +37,7 @@ public class ClienteController {
 	public Cliente addCliente(@RequestBody Cliente cliente) {
 		return clienteService.saveCliente(cliente);
 	}
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/delete/{id}")
 	public void deleteCliente(@PathVariable long id) {
 		clienteService.delete(id);
 	}

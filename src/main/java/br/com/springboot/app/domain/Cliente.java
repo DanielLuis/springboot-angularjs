@@ -75,9 +75,9 @@ public class Cliente implements Serializable {
             return false;
         }
 
-        Cliente atividade = (Cliente) o;
+        Cliente cliente = (Cliente) o;
 
-        if (!Objects.equals(id, atividade.id))
+        if (!Objects.equals(id, cliente.id))
             return false;
 
         return true;
