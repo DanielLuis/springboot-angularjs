@@ -2,18 +2,19 @@ package br.com.springboot.app.controller;
 
 
 import static org.hamcrest.Matchers.*;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -21,12 +22,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import br.com.springboot.app.domain.Cliente;
 import br.com.springboot.app.service.ClienteService;
-import br.com.springboot.app.support.BaseTest;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ClienteController.class)
@@ -63,8 +63,7 @@ public class ClienteControllerTest{
 	}
     @Before
     public void setUp() {
-    	cliente = new Cliente(Long.valueOf(1),"Daniel");
-    	
+    	cliente = new Cliente("Daniel");
     	json = obterJson(cliente);
     }
 
@@ -74,8 +73,8 @@ public class ClienteControllerTest{
     
     @Test
     public void findAllTest() throws Exception{
-    	Cliente cliente1 = new Cliente("Daniel"); 
-    	Cliente cliente2 = new Cliente("Fabio"); 
+    	Cliente cliente1 = new Cliente(Long.valueOf(1),"Daniel"); 
+    	Cliente cliente2 = new Cliente(Long.valueOf(2),"Fabio"); 
     	
     	List<Cliente> clientes = Arrays.asList(cliente1,cliente2);
     	
@@ -86,9 +85,13 @@ public class ClienteControllerTest{
     	this.mockMvc.perform(get(URL_CLIENTE)
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.id", is(1)))
-        .andExpect(jsonPath("$.description", is("Lorem ipsum")))
-        .andExpect(jsonPath("$.title", is("Foo")));
+        .andExpect(jsonPath("$[0].idCliente", is(1)))
+        .andExpect(jsonPath("$[0].nome", is("Daniel")))
+        .andExpect(jsonPath("$[1].idCliente", is(2)))
+        .andExpect(jsonPath("$[1].nome", is("Fabio")));
+    	
+    	
+    	
 	}
 
 //	public Cliente findOneTest(long id){
@@ -100,17 +103,19 @@ public class ClienteControllerTest{
 //	
     @Test
     public void saveClienteTest() throws Exception{
+    	Cliente cliente1 = new Cliente(Long.valueOf(1),"Daniel"); 
+
     	
-//    	when(clienteService.saveCliente(any(Cliente.class))).thenReturn(getCliente(Long.valueOf(null)));
-//    	
-//    	
-//			this.mockMvc.perform(post("/clientes/add")
-//			    .contentType(MediaType.APPLICATION_JSON)
-//			    .content(json))
-//			    .andExpect(status().isOk());
-//			
-//			
-//		verif
+    	
+    	when(clienteService.saveCliente(cliente)).thenReturn(cliente1);
+  	
+    	
+		this.mockMvc.perform(post(URL_CLIENTE+"add")
+		    .contentType(MediaType.APPLICATION_JSON)
+		    .content(json))
+		    .andExpect(status().isOk());
+			
+			
     	
 	}
 //	@Transactional(propagation=Propagation.REQUIRED)

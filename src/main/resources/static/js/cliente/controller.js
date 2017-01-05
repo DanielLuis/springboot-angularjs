@@ -1,8 +1,7 @@
  
 angular.module('myApp.controllers',['ngAnimate','myApp.modals','angularModalService'])
 
-
-.controller('ClienteListController', ['$scope','$location', 'ClienteService','ModalService','spinnerService', function($scope,$location, ClienteService,ModalService,spinnerService) {
+.controller('ClienteListController', ['$scope','$location', 'ClienteService','ModalService', function($scope,$location, ClienteService,ModalService,cfpLoadingBar) {
     $scope.clientes=[];
     
     $scope.searchName="";
@@ -20,7 +19,7 @@ angular.module('myApp.controllers',['ngAnimate','myApp.modals','angularModalServ
     $scope.confirmDelete = function(id) {
       ModalService.showModal({
         templateUrl: "js/components/modal/simpleModal.html",
-        controller: "SimpleController"
+        controller:"SimpleController"
       }).then(function(modal) {
         modal.element.modal();
         modal.close.then(function(result) {
@@ -34,11 +33,9 @@ angular.module('myApp.controllers',['ngAnimate','myApp.modals','angularModalServ
 
     
     $scope.fetchAllClientes = function(){
-//    	spinnerService.show('clientesSpinner');
-    	ClienteService.fetchAllClientes()
+    	ClienteService.fetchClientes("")
             .then(
             function(clientes) {
-//            	spinnerService.hide('clientesSpinner');
                 $scope.clientes = clientes;
             },
             function(errResponse){
@@ -75,7 +72,7 @@ angular.module('myApp.controllers',['ngAnimate','myApp.modals','angularModalServ
 
 	
     $scope.fetchCliente = function(codigo){
-    	ClienteService.fetchCliente(codigo)
+    	ClienteService.fetchClientes(codigo)
             .then(
             function(cliente) {
             	$scope.cliente=  cliente;

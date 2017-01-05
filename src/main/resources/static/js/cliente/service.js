@@ -1,36 +1,34 @@
 'use strict';
  
-angular.module('myApp.services',[]).factory('ClienteService', ['$http', '$q', function($http, $q){
+angular.module('myApp.services',['chieffancypants.loadingBar'])
+.config(function(cfpLoadingBarProvider) {
+    cfpLoadingBarProvider.includeSpinner = false;
+})
+.factory('ClienteService', ['$http', '$q','cfpLoadingBar', function($http, $q,cfpLoadingBar){
  
-    var REST_SERVICE_URI = 'http://localhost:8080/myApp/clientes/';
+    var REST_CLIENTE_SERVICE_URI = 'clientes/';
  
     var factory = {
-        fetchAllClientes: fetchAllClientes,
-        fetchCliente: fetchCliente,
+        fetchClientes: fetchClientes,
         createCliente: createCliente,
         deleteCliente:deleteCliente
     };
  
     return factory;
  
-    function fetchAllClientes() {
-        var deferred = $q.defer();
-        $http.get(REST_SERVICE_URI)
-            .then(
-            function (response) {
-                deferred.resolve(response.data);
-            },
-            function(errResponse){
-                console.error('Error while fetching Clientes');
-                deferred.reject(errResponse);
-            }
-        );
-        return deferred.promise;
-    }
+    function fetchClientes(id) {
 
-    function fetchCliente(id) {
-        var deferred = $q.defer();
-        $http.get(REST_SERVICE_URI+id)
+        if (id == undefined){
+        	id = "";
+        }
+
+    	var deferred = $q.defer();
+        
+        
+        
+        cfpLoadingBar.start();
+        
+        $http.get(REST_CLIENTE_SERVICE_URI+id)
             .then(
             function (response) {
                 deferred.resolve(response.data);
@@ -40,12 +38,18 @@ angular.module('myApp.services',[]).factory('ClienteService', ['$http', '$q', fu
                 deferred.reject(errResponse);
             }
         );
+        
+        cfpLoadingBar.complete();
+        
         return deferred.promise;
     }
  
     function createCliente(cliente) {
         var deferred = $q.defer();
-        $http.post(REST_SERVICE_URI+"add", cliente)
+        
+        cfpLoadingBar.start();
+        
+        $http.post(REST_CLIENTE_SERVICE_URI+"add", cliente)
             .then(
             function (response) {
                 deferred.resolve(response.data);
@@ -55,13 +59,19 @@ angular.module('myApp.services',[]).factory('ClienteService', ['$http', '$q', fu
                 deferred.reject(errResponse);
             }
         );
+        
+        cfpLoadingBar.complete();
+        
         return deferred.promise;
     }
  
  
     function deleteCliente(id) {
         var deferred = $q.defer();
-        $http.delete(REST_SERVICE_URI+"delete/"+id)
+        
+        cfpLoadingBar.start();
+        
+        $http.delete(REST_CLIENTE_SERVICE_URI+"delete/"+id)
             .then(
             function (response) {
                 deferred.resolve(response.data);
@@ -71,6 +81,8 @@ angular.module('myApp.services',[]).factory('ClienteService', ['$http', '$q', fu
                 deferred.reject(errResponse);
             }
         );
+        
+        cfpLoadingBar.complete();
         return deferred.promise;
     };
  
