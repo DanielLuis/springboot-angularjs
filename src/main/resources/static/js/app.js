@@ -1,4 +1,4 @@
-var app = angular.module('myApp', ['ngRoute','ngResource','ngMessages','myApp.controllers','myApp.services','angularSpinners']);
+var app = angular.module('myApp', ['myApp.controllers','myApp.services','ngRoute','ngMessages']);
 app.config(function($routeProvider){
     $routeProvider
     .when('/clientes',{

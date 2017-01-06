@@ -10,8 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
-import org.springframework.hateoas.ResourceSupport;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Classe Cliente.
@@ -30,6 +30,8 @@ public class Cliente implements Serializable {
     @Column(name = "CD_CLIENTE")
     private Long id;
 
+    @NotNull(message = "erro.cliente.nome.obrigatorio")
+    @Size(max = 2, message = "erro.cliente.nome.tamanho")
     @Column(name = "NM_CLIENTE")
     private String nome;
 

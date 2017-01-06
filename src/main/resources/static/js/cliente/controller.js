@@ -1,7 +1,7 @@
  
-angular.module('myApp.controllers',['ngAnimate','myApp.modals','angularModalService'])
+angular.module('myApp.controllers',['myApp.modals','ngAnimate','angularModalService'])
 
-.controller('ClienteListController', ['$scope','$location', 'ClienteService','ModalService', function($scope,$location, ClienteService,ModalService,cfpLoadingBar) {
+.controller('ClienteListController', ['$scope','$location', 'ClienteService','ModalService', function($scope,$location, ClienteService,ModalService) {
     $scope.clientes=[];
     
     $scope.searchName="";
@@ -48,7 +48,28 @@ angular.module('myApp.controllers',['ngAnimate','myApp.modals','angularModalServ
  
 }]).controller('ClienteCreateController', ['$scope','$location', 'ClienteService', function($scope,$location, ClienteService) { 
 	$scope.cliente={};
-	   
+	 
+	
+	 $scope.success = function () {
+	        var message = '<strong>Well done!</strong> You successfully read this important alert message.';
+	        Flash.create('success', message);
+	    };
+	    $scope.info = function () {
+	        var message = '<strong>Heads up!</strong> This alert needs your attention, but it\'s not super important.';
+	        Flash.create('info', message);
+	    };
+	    $scope.warning = function () {
+	        var message = '<strong>Warning!</strong> Better check yourself, you\'re not looking too good.';
+	        Flash.create('warning', message);
+	    };
+	    $scope.danger = function () {
+	        var message = '<strong>Oh snap!</strong> Change a few things up and try submitting again.';
+	        Flash.create('danger', message);
+	    };
+	    $scope.myCallback = function(flash) {
+	        console.log('Received flash: ' + JSON.stringify(flash));
+	    };
+	
 	$scope.createCliente = function (form){
 		$scope.submitted = true;
 		if(form.$valid) {

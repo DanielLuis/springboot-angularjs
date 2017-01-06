@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" >
     <link rel="stylesheet" type="text/css" href="css/app.css" />
     <link rel="stylesheet" type="text/css" href="css/loading-bar.css" />
+    <link rel="stylesheet" type="text/css" href="css/angular-flash.css" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="css/font-awesome/font-awesome.css"/>
     
@@ -34,6 +35,7 @@
     <div class="container">
         <div class="row top-buffer">
             <div class="col-xs-8 col-xs-offset-2">
+            	<flash-message duration="5000" show-close="true" on-dismiss="myCallback(flash)"></flash-message>
                 <div ng-view></div>
             </div>
         </div>
@@ -55,6 +57,7 @@
 <script type="text/javascript" src="js/angular/angular-messages.js" ></script>
 <script type="text/javascript" src="js/angular/angular-animate.js" ></script>
 <script type="text/javascript" src="js/angular/angular-spinners.js" ></script>
+<script type="text/javascript" src="js/angular/angular-flash.js" ></script>
 <script type="text/javascript" src="js/components/modal-service.js" ></script>
 <script type="text/javascript" src="js/components/loading-bar.js" ></script>
 

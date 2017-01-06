@@ -23,7 +23,6 @@ public class ClienteService
 		clienteRepository.delete(id);
 	}
 
-	
 	@Transactional(propagation=Propagation.REQUIRED)
 	public Cliente saveCliente(Cliente cliente){
 		 return clienteRepository.save(cliente);

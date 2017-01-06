@@ -1,10 +1,10 @@
 'use strict';
  
-angular.module('myApp.services',['chieffancypants.loadingBar'])
+angular.module('myApp.services',['chieffancypants.loadingBar','ngFlash'])
 .config(function(cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeSpinner = false;
 })
-.factory('ClienteService', ['$http', '$q','cfpLoadingBar', function($http, $q,cfpLoadingBar){
+.factory('ClienteService', ['$http', '$q','cfpLoadingBar','Flash', function($http, $q,cfpLoadingBar,Flash){
  
     var REST_CLIENTE_SERVICE_URI = 'clientes/';
  
@@ -55,7 +55,10 @@ angular.module('myApp.services',['chieffancypants.loadingBar'])
                 deferred.resolve(response.data);
             },
             function(errResponse){
-                console.error('Error while creating Cliente');
+            	var message = '<strong>Oh snap!</strong> Change a few things up and try submitting again.';
+    	        Flash.create('danger', errResponse.data.mensagem);
+
+//                console.error('Error while creating Cliente');
                 deferred.reject(errResponse);
             }
         );
